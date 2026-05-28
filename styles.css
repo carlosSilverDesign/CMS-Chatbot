@@ -1,4 +1,4 @@
-/* Universal reset and defaults */
+/* Restablecimiento universal y valores por defecto */
 * {
   margin: 0;
   padding: 0;
@@ -16,7 +16,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Scrollbar styles for the application */
+/* Estilos de barra de desplazamiento para la aplicación */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -35,7 +35,7 @@ body {
   background: #9AA6B2;
 }
 
-/* Header bar styling */
+/* Estilos de la barra de cabecera (Header) */
 .cms-header {
   height: 64px;
   background-color: #FFFFFF;
@@ -175,14 +175,14 @@ body {
   user-select: none;
 }
 
-/* Layout container styling */
+/* Estilos del contenedor de diseño principal */
 .main-container {
   display: flex;
   flex: 1;
   overflow: hidden;
 }
 
-/* Sidebar navigation styling */
+/* Estilos del panel de navegación lateral (Sidebar) */
 .sidebar-panel {
   width: 320px;
   background-color: #FFFFFF;
@@ -269,7 +269,7 @@ body {
   background-color: #F4F6F8;
 }
 
-/* Tree Structure styling */
+/* Estilos de la estructura del árbol de navegación */
 .tree-row {
   display: flex;
   align-items: center;
@@ -334,12 +334,14 @@ body {
 
 .tree-badge {
   font-size: 9px;
+  line-height: 1rem;
   font-weight: 700;
   padding: 2px 6px;
   border-radius: 4px;
   margin-left: 8px;
   text-transform: uppercase;
   flex-shrink: 0;
+  letter-spacing: 0.02rem;
 }
 
 .tree-badge.badge-faq {
@@ -381,7 +383,7 @@ body {
   text-align: center;
 }
 
-/* Editor content container panel */
+/* Panel contenedor del contenido del editor */
 .content-panel {
   flex: 1;
   display: flex;
@@ -391,7 +393,7 @@ body {
   height: 100%;
 }
 
-/* Tabs styling */
+/* Estilos de las pestañas de navegación */
 .tabs-navigation-bar {
   background-color: #FFFFFF;
   border-bottom: 1px solid #C6CFD7;
@@ -413,7 +415,7 @@ body {
   font-family: 'Lato', sans-serif;
   font-size: 14px;
   font-weight: 700;
-  color: #5B6E80;
+  color: #8E9EAE;
   cursor: pointer;
   transition: all 0.2s ease;
   border-bottom: 3px solid transparent;
@@ -425,12 +427,12 @@ body {
 }
 
 .nav-tab.active {
-  color: #0F848F;
-  border-bottom-color: #0F848F;
+  color: #222;
+  border-bottom-color: #222;
   font-weight: 900;
 }
 
-/* Breadcrumbs bar */
+/* Barra de migas de pan (Breadcrumbs) */
 .breadcrumbs-bar {
   padding: 16px 24px;
   font-size: 12px;
@@ -481,7 +483,7 @@ body {
   text-transform: uppercase;
 }
 
-/* Primary card where editors reside */
+/* Tarjeta principal donde se ubican los editores */
 .editor-content-card {
   flex: 1;
   margin: 0 24px 24px 24px;
@@ -492,7 +494,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .editor-empty-state {
@@ -505,7 +507,7 @@ body {
   text-align: center;
 }
 
-/* Form inputs & styling */
+/* Entradas de formulario y estilos generales */
 .edit-form-container {
   display: flex;
   flex-direction: column;
@@ -635,7 +637,7 @@ body {
   border: 1px solid #E4E8EC;
 }
 
-/* Radio button subtype group */
+/* Grupo de botones de opción de subtipo */
 .type-selectors-group {
   display: flex;
   gap: 16px;
@@ -692,7 +694,7 @@ body {
   line-height: 1.4;
 }
 
-/* WYSIWYG editor framework */
+/* Estructura del editor WYSIWYG */
 .wysiwyg-editor-container {
   border: 1px solid #C6CFD7;
   border-radius: 6px;
@@ -758,7 +760,7 @@ body {
   line-height: 1.4;
 }
 
-/* Brother questions listed at bottom */
+/* Preguntas del mismo nivel (hermanas) mostradas al final */
 .other-questions-list-section {
   margin-top: 32px;
   border-top: 1px solid #C6CFD7;
@@ -798,7 +800,7 @@ body {
   text-decoration: underline;
 }
 
-/* Form actions bar */
+/* Barra de acciones del formulario */
 .form-actions-row {
   display: flex;
   align-items: center;
@@ -849,7 +851,7 @@ body {
   background-color: #7A8795;
 }
 
-/* Modals dialog structure */
+/* Estructura de diálogos modales */
 dialog {
   margin: auto;
   border: none;
@@ -873,8 +875,9 @@ dialog::backdrop {
   width: 480px;
 }
 
-/* Fix browser default styling that sets display block on showModal */
-dialog[open], .custom-modal[open] {
+/* Corrección de estilos predeterminados del navegador que aplican display block al usar showModal */
+dialog[open],
+.custom-modal[open] {
   display: flex;
   flex-direction: column;
 }
@@ -952,6 +955,10 @@ dialog[open], .custom-modal[open] {
 }
 
 .btn-outline-cancel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   background-color: #FFFFFF;
   border: 1px solid #C6CFD7;
   color: #222222;
@@ -985,7 +992,7 @@ dialog[open], .custom-modal[open] {
   background-color: #0b6770;
 }
 
-/* Specific deletion modal styling */
+/* Estilo específico del modal de eliminación */
 .delete-confirm-modal {
   width: 440px;
 }
@@ -1103,7 +1110,7 @@ dialog[open], .custom-modal[open] {
   background-color: #B71C1C;
 }
 
-/* Chatbot Simulator styles */
+/* Estilos del simulador de chatbot */
 .preview-tab-wrapper {
   display: flex;
   flex-direction: column;
@@ -1330,7 +1337,7 @@ dialog[open], .custom-modal[open] {
   justify-content: center;
 }
 
-/* History logs grid style */
+/* Estilo de la cuadrícula de registros de historial */
 .history-tab-wrapper {
   display: flex;
   flex-direction: column;
@@ -1435,7 +1442,7 @@ dialog[open], .custom-modal[open] {
   color: #9AA6B2;
 }
 
-/* Toast message notification system */
+/* Sistema de notificaciones de mensajes Toast */
 .app-toast {
   position: fixed;
   bottom: 24px;
@@ -1497,7 +1504,7 @@ dialog[open], .custom-modal[open] {
   color: #222222;
 }
 
-/* Home Dashboard Screen */
+/* Pantalla del panel de control de Inicio (Dashboard) */
 .home-dashboard-container {
   display: flex;
   flex-direction: column;
@@ -1515,7 +1522,7 @@ dialog[open], .custom-modal[open] {
   text-align: center;
 }
 
-.home-logo-large {
+/* .home-logo-large {
   background-color: #0F848F;
   color: #FFFFFF;
   width: 80px;
@@ -1526,6 +1533,10 @@ dialog[open], .custom-modal[open] {
   justify-content: center;
   margin: 0 auto 20px auto;
   box-shadow: 0 8px 24px rgba(15, 132, 143, 0.25);
+} */
+
+.home-logo-large {
+  margin-bottom: 16px;
 }
 
 .home-title {
@@ -1660,4 +1671,182 @@ dialog[open], .custom-modal[open] {
   background-color: #0b6770;
   transform: translateY(-1px);
   box-shadow: 0 6px 16px rgba(15, 132, 143, 0.25);
+}
+
+/* Actualizaciones de estilos para subcategorías y categorías principales */
+
+/* Nombre de la categoría principal en negrita (800) */
+.tree-category-row .tree-name {
+  font-weight: 800 !important;
+}
+
+/* Tarjetas de selección de tipo de contenido en modal (Crear subcategoría) */
+.modal-type-cards {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.modal-type-card {
+  flex: 1;
+  border: 1px solid #C6CFD7;
+  border-radius: 8px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  user-select: none;
+}
+
+.modal-type-card:hover {
+  background-color: #F4F6F8;
+}
+
+.modal-type-card.active {
+  border: 2px solid #222222;
+  background-color: #FFFFFF;
+}
+
+.modal-card-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  align-self: flex-start;
+  text-transform: uppercase;
+}
+
+.modal-card-badge.badge-faq {
+  background-color: #E7F8EF;
+  color: #278B52;
+}
+
+.modal-card-badge.badge-directo {
+  background-color: #FFF3E0;
+  color: #F97316;
+}
+
+.modal-card-title {
+  font-family: 'Lato', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #222222;
+}
+
+.modal-card-desc {
+  font-size: 11px;
+  color: #5B6E80;
+  line-height: 1.4;
+}
+
+/* Diseño horizontal para la fila de botones de opción en el editor de subcategorías */
+.type-selectors-group .type-radio-label {
+  flex: 1;
+  display: flex;
+  flex-direction: row !important;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 16px !important;
+  border: 1.5px solid #C6CFD7;
+  border-radius: 8px;
+  cursor: pointer;
+  user-select: none;
+  background-color: #FFFFFF;
+  opacity: 0.45;
+  transition: all 0.2s ease;
+}
+
+.type-selectors-group .type-radio-label:hover {
+  background-color: #F4F6F8;
+}
+
+.type-selectors-group .type-radio-label.active {
+  opacity: 1;
+  border: 2px solid #222222 !important;
+  background-color: #FFFFFF;
+  font-weight: 700;
+}
+
+.type-selectors-group .type-radio-label input[type="radio"] {
+  display: none;
+}
+
+.type-selectors-group .radio-custom-badge {
+  margin-bottom: 0;
+  align-self: center;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.type-selectors-group .radio-desc {
+  font-size: 13px;
+  color: #222222;
+  font-weight: 500;
+}
+
+/* Advertencias y notas para la página de edición de subcategorías */
+.sub-warning-info-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: #5B6E80;
+  margin-top: 14px;
+  line-height: 1.5;
+  padding: 0 4px;
+}
+
+.sub-warning-info-message svg {
+  flex-shrink: 0;
+  color: #5B6E80;
+  margin-top: 2px;
+}
+
+.sub-type-description {
+  font-size: 13px;
+  color: #9AA6B2;
+  margin-top: 8px;
+  padding-left: 24px;
+}
+
+/* Estilos para los modales de confirmación de advertencia por cambio de tipo */
+.warning-cascade-box {
+  background-color: #FFF3E0;
+  border: 1px solid #FBBF24;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.warning-cascade-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #F59E0B;
+  margin-bottom: 12px;
+}
+
+.warning-total-text {
+  font-size: 13px;
+  color: #F97316;
+}
+
+.warning-total-text strong {
+  font-weight: 700;
+}
+
+.warning-divider {
+  height: 1px;
+  background-color: #FBBF24;
+  margin: 12px 0;
+}
+
+.warning-theme-icon {
+  background-color: #FFF3E0;
+  color: #FBBF24 !important;
 }

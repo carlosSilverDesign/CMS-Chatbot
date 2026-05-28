@@ -1,6 +1,6 @@
-// WienerBot CMS - Application Logic
+// WienerBot CMS - Lógica de la Aplicación
 
-// 1. Initial Seed Data
+// 1. Semilla de Datos Iniciales
 const DEFAULT_DATA = {
   categories: ["cat-1", "cat-2", "cat-3"],
   nodes: {
@@ -205,18 +205,18 @@ const DEFAULT_HISTORY = [
   }
 ];
 
-// 2. Application State
+// 2. Estado de la Aplicación
 let state = {
   categories: [],
   nodes: {},
-  expandedNodes: new Set(["cat-1", "sub-1"]), // Pre-expand pregrado presencial and accesos
-  selectedNodeId: null, // Start with no selection for Home Screen
-  currentTab: "edit", // 'edit' | 'preview' | 'history'
+  expandedNodes: new Set(["cat-1", "sub-1"]), // Pre-expandir pregrado presencial y accesos
+  selectedNodeId: null, // Iniciar sin selección para la pantalla de inicio
+  currentTab: "edit", // 'edit' | 'preview' | 'history' (Pestaña actual)
   searchQuery: "",
   history: []
 };
 
-// Load state from localStorage or initialize with seed data
+// Cargar el estado desde localStorage o inicializar con los datos semilla
 function loadState() {
   const localData = localStorage.getItem("wienerbot_cms_data");
   const localHistory = localStorage.getItem("wienerbot_cms_history");
@@ -238,7 +238,7 @@ function loadState() {
     saveHistoryToLocalStorage();
   }
 
-  // Pre-expand items if present
+  // Pre-expandir elementos si están presentes
   if (state.selectedNodeId && state.nodes[state.selectedNodeId]) {
     expandParentNodes(state.selectedNodeId);
   }
@@ -271,7 +271,7 @@ function logChange(action, type, name, details) {
   saveHistoryToLocalStorage();
 }
 
-// 3. Tree Traversal Helpers
+// 3. Funciones Auxiliares de Recorrido del Árbol
 function expandParentNodes(nodeId) {
   let current = state.nodes[nodeId];
   while (current && current.parentId) {
@@ -280,7 +280,7 @@ function expandParentNodes(nodeId) {
   }
 }
 
-// Check if node matches search query or has a matching descendant
+// Comprobar si el nodo coincide con la búsqueda o tiene un descendiente que coincida
 function matchesSearch(nodeId, query) {
   if (!query) return true;
   
@@ -297,12 +297,12 @@ function matchesSearch(nodeId, query) {
   return false;
 }
 
-// 4. Recursive Sidebar Tree Renderer
+// 4. Renderizador Recursivo del Árbol de la Barra Lateral
 function renderTree(nodeId, depth = 0) {
   const node = state.nodes[nodeId];
   if (!node) return "";
 
-  // If search query exists, filter out non-matching trees
+  // Si existe una consulta de búsqueda, filtrar los árboles que no coincidan
   if (state.searchQuery && !matchesSearch(nodeId, state.searchQuery)) {
     return "";
   }
@@ -311,7 +311,7 @@ function renderTree(nodeId, depth = 0) {
   const isSelected = state.selectedNodeId === nodeId;
   const hasChildren = node.children && node.children.length > 0;
 
-  // Icons based on type
+  // Iconos basados en el tipo
   let icon = "📁";
   if (node.type === "category") {
     icon = node.icon || "🎓";
@@ -321,22 +321,23 @@ function renderTree(nodeId, depth = 0) {
 
   let html = "";
   
-  // Indentation class/style
+  // Clase/estilo de identación
   const indentStyle = `style="padding-left: ${depth * 14 + 12}px;"`;
 
-  // Badges
+  // Etiquetas (Badges)
   let badgeHtml = "";
   if (node.type === "subcategory") {
     const subtypeClass = node.subtype === "FAQ" ? "badge-faq" : "badge-directo";
     badgeHtml = `<span class="tree-badge ${subtypeClass}">${node.subtype}</span>`;
   }
 
-  // Row element
+  // Elemento de fila
   const selectedClass = isSelected ? "tree-row-selected" : "";
   const folderClass = node.type !== "question" ? "tree-folder-row" : "tree-question-row";
+  const categoryClass = node.type === "category" ? "tree-category-row" : "";
   
   html += `
-    <div class="tree-row ${selectedClass} ${folderClass}" data-id="${nodeId}" ${indentStyle}>
+    <div class="tree-row ${selectedClass} ${folderClass} ${categoryClass}" data-id="${nodeId}" ${indentStyle}>
       ${node.type !== "question" ? `
         <span class="tree-caret ${isExpanded ? "caret-expanded" : ""}">
           <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -350,19 +351,19 @@ function renderTree(nodeId, depth = 0) {
     </div>
   `;
 
-  // Render children and creation inline buttons if expanded
+  // Renderizar hijos y botones de creación en línea si está expandido
   if (node.type !== "question" && (isExpanded || state.searchQuery)) {
     html += `<div class="tree-children-container" data-parent-id="${nodeId}">`;
     
-    // Render actual children
+    // Renderizar los hijos reales
     if (node.children && node.children.length > 0) {
       node.children.forEach(childId => {
         html += renderTree(childId, depth + 1);
       });
     }
 
-    // Inline action buttons
-    // Indent for inline buttons inside this container
+    // Botones de acción en línea
+    // Identación para botones en línea dentro de este contenedor
     const actionIndentStyle = `style="padding-left: ${(depth + 1) * 14 + 28}px;"`;
     
     if (node.type === "category") {
@@ -406,14 +407,14 @@ function updateSidebarTree() {
 }
 
 function attachTreeEvents() {
-  // Click on rows to select or toggle expand
+  // Clic en las filas para seleccionar o alternar la expansión
   const rows = document.querySelectorAll(".tree-row");
   rows.forEach(row => {
     row.addEventListener("click", (e) => {
       const id = row.getAttribute("data-id");
       const node = state.nodes[id];
       
-      // If clicked caret or folder itself, we might toggle expansion
+      // Si se hizo clic en el caret o en la carpeta misma, se puede alternar la expansión
       const isCaret = e.target.closest(".tree-caret");
       
       if (isCaret && node.type !== "question") {
@@ -425,7 +426,7 @@ function attachTreeEvents() {
     });
   });
 
-  // Inline creation buttons
+  // Botones de creación en línea
   document.querySelectorAll(".add-subcategory-btn").forEach(btn => {
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -455,14 +456,14 @@ function toggleNodeExpansion(nodeId) {
 function selectNode(nodeId) {
   state.selectedNodeId = nodeId;
   
-  // Make sure parents are expanded so it's visible in tree
+  // Asegurar que los nodos padres estén expandidos para que sea visible en el árbol
   expandParentNodes(nodeId);
   
   updateSidebarTree();
   loadSelectedNodeContent();
 }
 
-// 5. Breadcrumbs Generator
+// 5. Generador de Migas de Pan (Breadcrumbs)
 function generateBreadcrumbs(nodeId) {
   const path = [];
   let current = state.nodes[nodeId];
@@ -481,7 +482,7 @@ function generateBreadcrumbs(nodeId) {
     const label = `${icon} ${node.name}`;
     
     if (index === path.length - 1) {
-      // Last item, add active type label
+      // Último elemento, añadir etiqueta de tipo activo
       const typeLabel = node.type === "category" ? "Categoría" : (node.type === "subcategory" ? "Subcategoría" : "Pregunta");
       html += `<span class="breadcrumb-item breadcrumb-active" data-id="${node.id}">${escapeHtml(node.name)}</span>`;
       html += ` <span class="breadcrumb-separator">›</span> `;
@@ -494,7 +495,7 @@ function generateBreadcrumbs(nodeId) {
 
   breadcrumbsContainer.innerHTML = html;
 
-  // Add click handlers to breadcrumbs for quick navigation
+  // Añadir manejadores de clic a las migas de pan para una navegación rápida
   breadcrumbsContainer.querySelectorAll(".breadcrumb-link").forEach(link => {
     link.addEventListener("click", () => {
       const id = link.getAttribute("data-id");
@@ -503,13 +504,13 @@ function generateBreadcrumbs(nodeId) {
   });
 }
 
-// 6. Form Loading and Saving (CRUD - Update/Read)
+// 6. Carga y Guardado de Formularios (CRUD - Actualización/Lectura)
 function loadSelectedNodeContent() {
   const node = state.nodes[state.selectedNodeId];
   const editorArea = document.getElementById("editor-fields-area");
   
   if (!node) {
-    // Generate Stats for Home Screen
+    // Generar estadísticas para la pantalla de inicio
     let categoriesCount = state.categories.length;
     let subcategoriesCount = 0;
     let questionsCount = 0;
@@ -523,12 +524,21 @@ function loadSelectedNodeContent() {
       <div class="home-dashboard-container">
         <div class="home-hero-section">
           <div class="home-logo-large">
-            <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="11" width="18" height="10" rx="2"></rect>
-              <circle cx="12" cy="5" r="2"></circle>
-              <path d="M12 7v4"></path>
-              <line x1="8" y1="16" x2="8" y2="16"></line>
-              <line x1="16" y1="16" x2="16" y2="16"></line>
+            <svg xmlns="http://www.w3.org/2000/svg" width="88" height="80" viewBox="0 0 88 80" fill="none">
+              <g clip-path="url(#clip0_110_14)">
+                <path d="M63.6167 79.6666H16.45C6.64667 79.6666 -0.81 70.8633 0.8 61.1933L8.73667 13.5899C10.01 5.93992 16.63 0.333252 24.3833 0.333252H71.5467C81.35 0.333252 88.8067 9.13658 87.1967 18.8066L79.2633 66.4099C77.9867 74.0599 71.37 79.6666 63.6133 79.6666H63.6167Z" fill="#0F848F"/>
+                <path d="M44 32.0666V24.1333H36.0667" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M55.9 32.0667H32.1C29.91 32.0667 28.1333 33.8433 28.1333 36.0333V51.9C28.1333 54.09 29.91 55.8667 32.1 55.8667H55.9C58.09 55.8667 59.8667 54.09 59.8667 51.9V36.0333C59.8667 33.8433 58.09 32.0667 55.9 32.0667Z" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M24.1667 43.9666H28.1333" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M59.8667 43.9666H63.8333" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M49.95 41.9834V45.9501" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M38.05 41.9834V45.9501" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              </g>
+              <defs>
+                <clipPath id="clip0_110_14">
+                  <rect width="88" height="80" fill="white"/>
+                </clipPath>
+              </defs>
             </svg>
           </div>
           <h1 class="home-title">WienerBot CMS</h1>
@@ -584,7 +594,7 @@ function loadSelectedNodeContent() {
 
   generateBreadcrumbs(node.id);
   
-  // Clear any existing active tab states in the view if switching
+  // Limpiar cualquier estado de pestaña activa existente en la vista si se cambia
   if (state.currentTab === "preview") {
     loadPreviewTab();
   } else if (state.currentTab === "history") {
@@ -651,7 +661,7 @@ function loadEditTab(node) {
       <div class="edit-form-container">
         <div class="form-title-row">
           <h2 class="form-section-title">Subcategoría</h2>
-          <span class="db-table-badge">NC_PE_ODA_CATEGORIES</span>
+          <span class="db-table-badge">NC_PE_ODA_SUBCATEGORIES</span>
         </div>
 
         <div class="form-field">
@@ -663,18 +673,37 @@ function loadEditTab(node) {
         </div>
 
         <div class="form-field">
-          <label class="form-label">Tipo de subcategoría</label>
+          <label class="form-label">Tipo de contenido</label>
+          <input type="hidden" id="edit-sub-type" value="${node.subtype}">
           <div class="type-selectors-group">
-            <label class="type-radio-label ${isFaq ? "active" : ""}">
-              <input type="radio" name="edit-sub-type" value="FAQ" ${isFaq ? "checked" : ""}>
+            <div class="type-radio-label ${isFaq ? "active" : ""}" id="edit-sub-type-btn-faq">
               <span class="radio-custom-badge badge-faq">FAQ</span>
-              <span class="radio-desc">Contiene preguntas frecuentes individuales</span>
-            </label>
-            <label class="type-radio-label ${!isFaq ? "active" : ""}">
-              <input type="radio" name="edit-sub-type" value="DIRECTO" ${!isFaq ? "checked" : ""}>
+              <span class="radio-desc">Tiene preguntas FAQ</span>
+            </div>
+            <div class="type-radio-label ${!isFaq ? "active" : ""}" id="edit-sub-type-btn-directo">
               <span class="radio-custom-badge badge-directo">DIRECTO</span>
-              <span class="radio-desc">Responde directamente sin desplegar preguntas</span>
-            </label>
+              <span class="radio-desc">Respuesta directa</span>
+            </div>
+          </div>
+          
+          <div class="sub-warning-info-message">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <span>
+              ${isFaq 
+                ? `Desactivar FAQ eliminará ${node.children.length} preguntas existentes. Primero elimina el contenido hijo para cambiar el tipo.`
+                : `Activar FAQ eliminará la respuesta directa existente. Primero elimina el contenido hijo para cambiar el tipo.`
+              }
+            </span>
+          </div>
+          <div class="sub-type-description">
+            ${isFaq 
+              ? `Tipo "FAQ": la subcategoría contiene preguntas con respuestas individuales.`
+              : `Tipo "Directo": la subcategoría mostrará un bloque de texto sin preguntas.`
+            }
           </div>
         </div>
 
@@ -734,7 +763,7 @@ function loadEditTab(node) {
       </div>
     `;
   } else if (node.type === "question") {
-    // Get other questions in this subcategory
+    // Obtener otras preguntas en esta subcategoría
     let otherQuestionsHtml = "";
     const parentNode = node.parentId ? state.nodes[node.parentId] : null;
     if (parentNode && parentNode.children && parentNode.children.length > 0) {
@@ -816,34 +845,35 @@ function loadEditTab(node) {
 
   editorArea.innerHTML = html;
 
-  // Attach button events
+  // Adjuntar eventos de botones
   document.getElementById("btn-save-node").addEventListener("click", () => saveSelectedNode(node));
   document.getElementById("btn-delete-node").addEventListener("click", () => openDeleteConfirmModal(node.id));
 
-  // Subcategory type radios toggle fields
+  // Manejadores de clic para el selector de tipo de subcategoría
   if (node.type === "subcategory") {
-    const faqRadio = document.querySelector('input[name="edit-sub-type"][value="FAQ"]');
-    const directRadio = document.querySelector('input[name="edit-sub-type"][value="DIRECTO"]');
-    
-    const updateSubtypeFields = () => {
-      const isFaq = faqRadio.checked;
-      document.getElementById("sub-faq-fields").style.display = isFaq ? "block" : "none";
-      document.getElementById("sub-direct-fields").style.display = isFaq ? "none" : "block";
-      
-      // Update styling class on radio labels
-      faqRadio.closest(".type-radio-label").classList.toggle("active", isFaq);
-      directRadio.closest(".type-radio-label").classList.toggle("active", !isFaq);
-    };
+    const faqBtn = document.getElementById("edit-sub-type-btn-faq");
+    const directoBtn = document.getElementById("edit-sub-type-btn-directo");
 
-    faqRadio.addEventListener("change", updateSubtypeFields);
-    directRadio.addEventListener("change", updateSubtypeFields);
+    if (faqBtn && directoBtn) {
+      faqBtn.addEventListener("click", () => {
+        if (node.subtype === "DIRECTO") {
+          openConfirmSwitchToFaqModal(node);
+        }
+      });
+
+      directoBtn.addEventListener("click", () => {
+        if (node.subtype === "FAQ") {
+          openConfirmSwitchToDirectoModal(node);
+        }
+      });
+    }
   }
 
-  // WYSIWYG commands
+  // Comandos WYSIWYG
   const wysiwygBtns = document.querySelectorAll(".wysiwyg-btn");
   wysiwygBtns.forEach(btn => {
     btn.addEventListener("mousedown", (e) => {
-      e.preventDefault(); // Don't steal focus from contenteditable
+      e.preventDefault(); // Evitar quitar el foco del elemento editable
       const command = btn.getAttribute("data-command");
       
       if (command === "createLink") {
@@ -857,7 +887,7 @@ function loadEditTab(node) {
     });
   });
 
-  // Jump to other brother questions
+  // Saltar a otras preguntas hermanas
   document.querySelectorAll(".other-question-li").forEach(li => {
     li.addEventListener("click", () => {
       const qId = li.getAttribute("data-id");
@@ -888,7 +918,7 @@ function saveSelectedNode(node) {
 
   } else if (node.type === "subcategory") {
     const newName = document.getElementById("edit-sub-name").value.trim();
-    const newSubtype = document.querySelector('input[name="edit-sub-type"]:checked').value;
+    const newSubtype = document.getElementById("edit-sub-type").value;
     
     if (!newName) {
       showToast("El nombre de la subcategoría es requerido.", "error");
@@ -943,11 +973,11 @@ function saveSelectedNode(node) {
     logChange("Modificado", node.type === "category" ? "Categoría" : (node.type === "subcategory" ? "Subcategoría" : "Pregunta"), node.name, logDetails);
     showToast("Cambios guardados con éxito.");
     
-    // Refresh Sidebar tree and Breadcrumbs
+    // Actualizar la barra lateral y Breadcrumbs
     updateSidebarTree();
     generateBreadcrumbs(node.id);
     
-    // If we're on question, refresh the form to reload "Other questions" just in case name changed
+    // Si estamos en una pregunta, recargar el formulario para actualizar "Otras preguntas" por si acaso cambió el nombre
     if (node.type === "question") {
       loadEditTab(node);
     }
@@ -956,7 +986,7 @@ function saveSelectedNode(node) {
   }
 }
 
-// 7. Cascading Delete Calculator & Modal
+// 7. Calculadora de Eliminación en Cascada y Modal
 function calculateDeleteCascade(nodeId) {
   let subcategoriesCount = 0;
   let questionsCount = 0;
@@ -969,11 +999,11 @@ function calculateDeleteCascade(nodeId) {
     if (node.type === "subcategory") {
       subcategoriesCount++;
       if (node.subtype === "DIRECTO") {
-        answersCount++; // Direct answer counts as a response record
+        answersCount++; // La respuesta directa cuenta como un registro de respuesta
       }
     } else if (node.type === "question") {
       questionsCount++;
-      answersCount++; // Each question has 1 answer
+      answersCount++; // Cada pregunta tiene 1 respuesta
     }
 
     if (node.children && node.children.length > 0) {
@@ -981,13 +1011,13 @@ function calculateDeleteCascade(nodeId) {
     }
   }
 
-  // Traverse children first (don't count the node itself in the recursive counters unless it matches, but the modal lists the children specifically)
+  // Recorrer los hijos primero (no contar el nodo en sí en los contadores recursivos a menos que coincida, pero el modal enumera específicamente a los hijos)
   const mainNode = state.nodes[nodeId];
   if (mainNode) {
     if (mainNode.children && mainNode.children.length > 0) {
       mainNode.children.forEach(childId => traverse(childId));
     }
-    // Also count the main node's own responses
+    // También contar las propias respuestas del nodo principal
     if (mainNode.type === "question") {
       answersCount++;
     } else if (mainNode.type === "subcategory" && mainNode.subtype === "DIRECTO") {
@@ -1005,6 +1035,95 @@ function calculateDeleteCascade(nodeId) {
   };
 }
 
+function openConfirmSwitchToDirectoModal(node) {
+  const modal = document.getElementById("confirm-switch-to-direct-modal");
+  if (!modal) return;
+  
+  // Calcular preguntas y respuestas que se eliminarán
+  const summary = calculateDeleteCascade(node.id);
+  
+  // Actualizar conteos en el diálogo
+  document.getElementById("switch-direct-questions-count").textContent = summary.questions;
+  document.getElementById("switch-direct-answers-count").textContent = summary.answers;
+  document.getElementById("switch-direct-total-value").textContent = summary.questions + summary.answers;
+
+  // Vincular botón de confirmar
+  const confirmBtn = document.getElementById("switch-direct-confirm-btn");
+  const newConfirmBtn = confirmBtn.cloneNode(true);
+  confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+
+  newConfirmBtn.addEventListener("click", () => {
+    // Función auxiliar para eliminar nodos recursivamente del mapa
+    function removeRecursive(id) {
+      const n = state.nodes[id];
+      if (!n) return;
+      if (n.children && n.children.length > 0) {
+        n.children.forEach(childId => removeRecursive(childId));
+      }
+      delete state.nodes[id];
+      state.expandedNodes.delete(id);
+    }
+
+    const questionCount = node.children.length;
+
+    // Eliminar preguntas hijas
+    node.children.forEach(childId => removeRecursive(childId));
+    node.children = [];
+    node.subtype = "DIRECTO";
+    node.directAnswer = "Escribe la respuesta directa aquí...";
+    node.initialMessage = "";
+
+    saveDataToLocalStorage();
+    logChange("Modificado", "Subcategoría", node.name, `Cambió tipo a DIRECTO. Se eliminaron en cascada sus ${questionCount} preguntas.`);
+    showToast("Subcategoría cambiada a Respuesta Directa.");
+
+    modal.close();
+    updateSidebarTree();
+    loadSelectedNodeContent();
+  });
+
+  // Vincular botón de cancelar
+  const cancelBtn = document.getElementById("switch-direct-cancel-btn");
+  if (cancelBtn) {
+    cancelBtn.addEventListener("click", () => modal.close());
+  }
+
+  modal.showModal();
+}
+
+function openConfirmSwitchToFaqModal(node) {
+  const modal = document.getElementById("confirm-switch-to-faq-modal");
+  if (!modal) return;
+
+  // Vincular botón de confirmar
+  const confirmBtn = document.getElementById("switch-faq-confirm-btn");
+  const newConfirmBtn = confirmBtn.cloneNode(true);
+  confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+
+  newConfirmBtn.addEventListener("click", () => {
+    node.directAnswer = "";
+    node.subtype = "FAQ";
+    node.initialMessage = "Selecciona una pregunta de la lista:";
+    node.children = [];
+
+    saveDataToLocalStorage();
+    logChange("Modificado", "Subcategoría", node.name, "Cambió tipo a FAQ. Se eliminó la respuesta directa.");
+    showToast("Subcategoría cambiada a FAQ.");
+
+    modal.close();
+    updateSidebarTree();
+    loadSelectedNodeContent();
+  });
+
+  // Vincular botón de cancelar
+  const cancelBtn = document.getElementById("switch-faq-cancel-btn");
+  if (cancelBtn) {
+    cancelBtn.addEventListener("click", () => modal.close());
+  }
+
+  modal.showModal();
+}
+
 function openDeleteConfirmModal(nodeId) {
   const node = state.nodes[nodeId];
   if (!node) return;
@@ -1012,7 +1131,7 @@ function openDeleteConfirmModal(nodeId) {
   const summary = calculateDeleteCascade(nodeId);
   const modal = document.getElementById("delete-modal");
   
-  // Format dialog strings
+  // Formatear cadenas del diálogo
   document.getElementById("delete-target-title").innerHTML = `¿Eliminar &ldquo;${escapeHtml(node.name)}&rdquo;?`;
   
   let listHtml = "";
@@ -1060,7 +1179,7 @@ function openDeleteConfirmModal(nodeId) {
   document.getElementById("delete-cascade-list").innerHTML = listHtml;
   document.getElementById("delete-total-value").textContent = node.type === "question" ? "1" : summary.total;
   
-  // Setup confirm button handler (using a clone to purge previous listeners)
+  // Configurar el manejador del botón de confirmación (usando un clon para purgar oyentes anteriores)
   const confirmBtn = document.getElementById("delete-confirm-btn");
   const newConfirmBtn = confirmBtn.cloneNode(true);
   confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
@@ -1080,7 +1199,7 @@ function executeDeleteNode(nodeId) {
   const nodeName = node.name;
   const nodeType = node.type === "category" ? "Categoría" : (node.type === "subcategory" ? "Subcategoría" : "Pregunta");
   
-  // Helper to recursively remove nodes from the map
+  // Función auxiliar para eliminar nodos recursivamente del mapa
   function removeRecursive(id) {
     const n = state.nodes[id];
     if (!n) return;
@@ -1091,25 +1210,25 @@ function executeDeleteNode(nodeId) {
     state.expandedNodes.delete(id);
   }
 
-  // Remove child references from parent
+  // Eliminar referencias de hijos del padre
   if (node.parentId) {
     const parent = state.nodes[node.parentId];
     if (parent && parent.children) {
       parent.children = parent.children.filter(childId => childId !== nodeId);
     }
   } else {
-    // Root level category
+    // Categoría de nivel raíz
     state.categories = state.categories.filter(catId => catId !== nodeId);
   }
 
-  // Recursively delete node and children from state
+  // Eliminar recursivamente el nodo y los hijos del estado
   removeRecursive(nodeId);
   saveDataToLocalStorage();
 
   logChange("Eliminado", nodeType, nodeName, `Eliminó la ${nodeType.toLowerCase()} "${nodeName}" en cascada.`);
   showToast(`"${nodeName}" eliminado con éxito.`, "info");
 
-  // Select another node (e.g. first remaining category)
+  // Seleccionar otro nodo (por ejemplo, la primera categoría restante)
   if (state.categories.length > 0) {
     selectNode(state.categories[0]);
   } else {
@@ -1119,8 +1238,8 @@ function executeDeleteNode(nodeId) {
   }
 }
 
-// 8. Custom Dialogs for Node Creation (CRUD - Create)
-let activeParentId = null; // Stores parent ID for subcategory/question creation
+// 8. Diálogos Personalizados para la Creación de Nodos (CRUD - Creación)
+let activeParentId = null; // Almacena el ID del padre para la creación de subcategoría/pregunta
 
 function openCreateCategoryModal() {
   const modal = document.getElementById("create-category-modal");
@@ -1134,6 +1253,13 @@ function openCreateSubcategoryModal(parentId) {
   const modal = document.getElementById("create-subcategory-modal");
   document.getElementById("new-sub-name").value = "";
   document.getElementById("new-sub-type").value = "FAQ";
+  
+  // Restablecer tarjetas activas en la interfaz de usuario
+  const cards = modal.querySelectorAll(".modal-type-card");
+  cards.forEach(c => c.classList.remove("active"));
+  const faqCard = modal.querySelector('.modal-type-card[data-type="FAQ"]');
+  if (faqCard) faqCard.classList.add("active");
+
   modal.showModal();
 }
 
@@ -1146,7 +1272,18 @@ function openCreateQuestionModal(parentId) {
 }
 
 function initCreationModals() {
-  // Category creation
+  // Manejar clics en las tarjetas de tipo en el modal de creación de subcategoría
+  const typeCards = document.querySelectorAll("#create-subcategory-modal .modal-type-card");
+  typeCards.forEach(card => {
+    card.addEventListener("click", () => {
+      typeCards.forEach(c => c.classList.remove("active"));
+      card.classList.add("active");
+      const type = card.getAttribute("data-type");
+      document.getElementById("new-sub-type").value = type;
+    });
+  });
+
+  // Creación de categorías
   document.getElementById("create-cat-save").addEventListener("click", () => {
     const name = document.getElementById("new-cat-name").value.trim();
     const msg = document.getElementById("new-cat-msg").value.trim();
@@ -1177,7 +1314,7 @@ function initCreationModals() {
     selectNode(id);
   });
 
-  // Subcategory creation
+  // Creación de subcategorías
   document.getElementById("create-sub-save").addEventListener("click", () => {
     const name = document.getElementById("new-sub-name").value.trim();
     const subtype = document.getElementById("new-sub-type").value;
@@ -1205,7 +1342,7 @@ function initCreationModals() {
       parentId: parentId
     };
 
-    // Add to parent
+    // Agregar al padre
     state.nodes[parentId].children.push(id);
     state.expandedNodes.add(parentId);
     state.expandedNodes.add(id);
@@ -1218,7 +1355,7 @@ function initCreationModals() {
     selectNode(id);
   });
 
-  // Question creation
+  // Creación de preguntas
   document.getElementById("create-q-save").addEventListener("click", () => {
     const name = document.getElementById("new-q-name").value.trim();
     const answer = document.getElementById("new-q-answer").value.trim();
@@ -1243,7 +1380,7 @@ function initCreationModals() {
       parentId: parentId
     };
 
-    // Add to parent
+    // Agregar al padre
     state.nodes[parentId].children.push(id);
     state.expandedNodes.add(parentId);
 
@@ -1255,7 +1392,7 @@ function initCreationModals() {
     selectNode(id);
   });
 
-  // Close buttons for all dialogs
+  // Botones de cierre para todos los diálogos
   document.querySelectorAll("dialog .btn-modal-cancel").forEach(btn => {
     btn.addEventListener("click", (e) => {
       const dialog = e.target.closest("dialog");
@@ -1264,9 +1401,9 @@ function initCreationModals() {
   });
 }
 
-// 9. Interactive Chatbot Preview Simulator
+// 9. Simulador de Vista Previa Interactiva del Chatbot
 let chatSession = {
-  history: [], // array of { sender: 'bot' | 'user', text: string, options: Array }
+  history: [], // arreglo de { sender: 'bot' | 'user', text: string, options: Array }
   currentNodeId: null
 };
 
@@ -1283,7 +1420,7 @@ function startPreviewSession() {
     return;
   }
 
-  // Trigger initial welcome
+  // Desencadenar bienvenida inicial
   navigateToPreviewNode(selectedNode.id, false);
 }
 
@@ -1299,7 +1436,7 @@ function navigateToPreviewNode(nodeId, addUserBubble = true) {
   }
 
   if (node.type === "category") {
-    // Show Category message + child subcategories as options
+    // Mostrar mensaje de Categoría + subcategorías hijas como opciones
     const options = node.children
       .map(childId => state.nodes[childId])
       .filter(Boolean)
@@ -1312,14 +1449,14 @@ function navigateToPreviewNode(nodeId, addUserBubble = true) {
     });
   } else if (node.type === "subcategory") {
     if (node.subtype === "DIRECTO") {
-      // Show direct response directly, no questions list
+      // Mostrar respuesta directa directamente, sin lista de preguntas
       chatSession.history.push({
         sender: "bot",
         text: node.directAnswer || "No se ha configurado una respuesta directa para esta sección.",
         options: []
       });
     } else {
-      // FAQ subtype: list questions as options
+      // Subtipo FAQ: listar preguntas como opciones
       const options = node.children
         .map(childId => state.nodes[childId])
         .filter(Boolean)
@@ -1332,7 +1469,7 @@ function navigateToPreviewNode(nodeId, addUserBubble = true) {
       });
     }
   } else if (node.type === "question") {
-    // Show answer directly
+    // Mostrar respuesta directamente
     chatSession.history.push({
       sender: "bot",
       text: node.answer || "No se ha configurado una respuesta sugerida.",
@@ -1382,10 +1519,10 @@ function renderChatMessages() {
 
   container.innerHTML = html;
   
-  // Scroll to bottom
+  // Desplazar hacia abajo
   container.scrollTop = container.scrollHeight;
 
-  // Option buttons event listeners
+  // Escuchadores de eventos para los botones de opciones
   container.querySelectorAll(".chat-option-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       const targetId = btn.getAttribute("data-target-id");
@@ -1397,7 +1534,7 @@ function renderChatMessages() {
 function restartChatPreview() {
   chatSession.history = [];
   
-  // If we want to start from the root, list all main categories
+  // Si queremos comenzar desde la raíz, listar todas las categorías principales
   const options = state.categories
     .map(catId => state.nodes[catId])
     .filter(Boolean)
@@ -1448,7 +1585,7 @@ function loadPreviewTab() {
         </div>
 
         <div class="chatbot-messages-area" id="chat-preview-messages">
-          <!-- Chat messages dynamically rendered here -->
+          <!-- Los mensajes del chat se renderizan dinámicamente aquí -->
         </div>
 
         <div class="chatbot-input-bar">
@@ -1467,7 +1604,7 @@ function loadPreviewTab() {
   startPreviewSession();
 }
 
-// 10. Change History Log tab
+// 10. Pestaña de Registro de Historial de Cambios
 function loadHistoryTab() {
   const editorArea = document.getElementById("editor-fields-area");
   
@@ -1527,14 +1664,14 @@ function loadHistoryTab() {
   `;
 }
 
-// 11. Tabs Navigation Handlers
+// 11. Manejadores de Navegación de Pestañas
 function initTabs() {
   const tabs = document.querySelectorAll(".nav-tab");
   tabs.forEach(tab => {
     tab.addEventListener("click", () => {
       const target = tab.getAttribute("data-tab");
       
-      // Update tab active state in UI
+      // Actualizar el estado activo de la pestaña en la interfaz de usuario
       tabs.forEach(t => t.classList.remove("active"));
       tab.classList.add("active");
       
@@ -1544,7 +1681,7 @@ function initTabs() {
   });
 }
 
-// 12. Search Input Handler
+// 12. Manejador del Input de Búsqueda
 function initSearch() {
   const searchInput = document.getElementById("header-search-input");
   if (!searchInput) return;
@@ -1555,9 +1692,9 @@ function initSearch() {
   });
 }
 
-// 13. Toast Notification helper
+// 13. Función auxiliar para notificaciones Toast
 function showToast(message, type = "success") {
-  // Remove existing toast if any
+  // Eliminar el toast existente si lo hay
   const existing = document.getElementById("app-toast");
   if (existing) existing.remove();
 
@@ -1581,17 +1718,17 @@ function showToast(message, type = "success") {
 
   document.body.appendChild(toast);
 
-  // Trigger animation reflow
+  // Desencadenar reflujo de animación
   setTimeout(() => toast.classList.add("visible"), 10);
 
-  // Remove toast after 3.5 seconds
+  // Eliminar el toast después de 3.5 segundos
   setTimeout(() => {
     toast.classList.remove("visible");
     setTimeout(() => toast.remove(), 300);
   }, 3500);
 }
 
-// 14. HTML Escape Utility
+// 14. Utilidad de Escape HTML
 function escapeHtml(str) {
   if (typeof str !== "string") return str;
   return str
@@ -1602,7 +1739,7 @@ function escapeHtml(str) {
     .replace(/'/g, "&#039;");
 }
 
-// 15. App Initialization on DOM Load
+// 15. Inicialización de la Aplicación al cargar el DOM
 window.addEventListener("DOMContentLoaded", () => {
   loadState();
   updateSidebarTree();
@@ -1611,7 +1748,7 @@ window.addEventListener("DOMContentLoaded", () => {
   initSearch();
   initCreationModals();
 
-  // Root Creation button triggers
+  // Desencadenadores de botones de Creación de Raíz
   document.getElementById("btn-add-root-category").addEventListener("click", openCreateCategoryModal);
   document.getElementById("btn-add-root-category-sidebar-header").addEventListener("click", openCreateCategoryModal);
 });

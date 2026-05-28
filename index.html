@@ -5,23 +5,43 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WienerBot CMS - Intranet Universidad Norbert Wiener</title>
-  <!-- Load Lato and Roboto Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- Cargar fuentes de Google Fonts: Lato y Roboto -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Roboto:wght@400;500;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-  <!-- Header: WienerBot CMS Navigation & Controls -->
+  <!-- Cabecera: Navegación y controles de WienerBot CMS -->
   <header class="cms-header" id="cms-header-bar">
     <div class="header-left">
       <div class="logo-container">
-        <!-- Custom Chatbot Bot Icon SVG -->
-        <svg class="logo-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="11" width="18" height="10" rx="2"></rect>
-          <circle cx="12" cy="5" r="2"></circle>
-          <path d="M12 7v4"></path>
-          <line x1="8" y1="16" x2="8" y2="16"></line>
-          <line x1="16" y1="16" x2="16" y2="16"></line>
+        <!-- Icono SVG del Bot de Chat Personalizado -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="44" height="40" viewBox="0 0 44 40" fill="none">
+          <g clip-path="url(#clip0_109_2)">
+            <path
+              d="M31.8084 39.8334H8.22503C3.32336 39.8334 -0.40497 35.4318 0.40003 30.5968L4.36836 6.79508C5.00503 2.97008 8.31503 0.166748 12.1917 0.166748H35.7734C40.675 0.166748 44.4034 4.56841 43.5984 9.40341L39.6317 33.2051C38.9934 37.0301 35.685 39.8334 31.8067 39.8334H31.8084Z"
+              fill="#0F848F" />
+            <path d="M22 16.0333V12.0667H18.0333" stroke="white" stroke-width="1.8" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path
+              d="M27.95 16.0332H16.05C14.955 16.0332 14.0667 16.9215 14.0667 18.0165V25.9499C14.0667 27.0449 14.955 27.9332 16.05 27.9332H27.95C29.045 27.9332 29.9333 27.0449 29.9333 25.9499V18.0165C29.9333 16.9215 29.045 16.0332 27.95 16.0332Z"
+              stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12.0833 21.9834H14.0666" stroke="white" stroke-width="1.8" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M29.9333 21.9834H31.9166" stroke="white" stroke-width="1.8" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M24.975 20.9917V22.975" stroke="white" stroke-width="1.8" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M19.025 20.9917V22.975" stroke="white" stroke-width="1.8" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </g>
+          <defs>
+            <clipPath id="clip0_109_2">
+              <rect width="44" height="40" fill="white" />
+            </clipPath>
+          </defs>
         </svg>
         <span class="logo-text">WienerBot CMS</span>
       </div>
@@ -30,11 +50,13 @@
 
     <div class="header-center">
       <div class="search-input-wrapper">
-        <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2"
+          fill="none" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        <input type="text" id="header-search-input" placeholder="Buscar pregunta o categoría..." aria-label="Buscador de preguntas y categorías">
+        <input type="text" id="header-search-input" placeholder="Buscar pregunta o categoría..."
+          aria-label="Buscador de preguntas y categorías">
       </div>
     </div>
 
@@ -49,29 +71,32 @@
     </div>
   </header>
 
-  <!-- Main Container: Sidebar + Content Panel -->
+  <!-- Contenedor principal: Barra lateral + Panel de contenido -->
   <div class="main-container" id="cms-main-layout">
-    <!-- Sidebar: Content Tree -->
+    <!-- Barra lateral: Árbol de contenido -->
     <aside class="sidebar-panel" id="cms-sidebar-navigation">
       <div class="sidebar-header">
         <h2 class="sidebar-title">ÁRBOL DE CONTENIDO</h2>
-        <button type="button" class="btn-icon-add" id="btn-add-root-category-sidebar-header" title="Nueva categoría raíz">
-          <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <button type="button" class="btn-icon-add" id="btn-add-root-category-sidebar-header"
+          title="Nueva categoría raíz">
+          <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2.5" fill="none"
+            stroke-linecap="round" stroke-linejoin="round">
             <line x1="12" y1="5" x2="12" y2="19"></line>
             <line x1="5" y1="12" x2="19" y2="12"></line>
           </svg>
         </button>
       </div>
 
-      <!-- Scrollable Tree Content -->
+      <!-- Contenido del árbol con desplazamiento -->
       <div class="tree-list-scrollable" id="tree-list-content">
-        <!-- Populated recursively by JS -->
+        <!-- Generado recursivamente por JS -->
       </div>
 
-      <!-- Fixed Sidebar Footer with New Category Action -->
+      <!-- Pie de barra lateral fijo con acción de Nueva Categoría -->
       <div class="sidebar-footer">
         <button type="button" class="btn-new-category-outline" id="btn-add-root-category">
-          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none"
+            stroke-linecap="round" stroke-linejoin="round">
             <line x1="12" y1="5" x2="12" y2="19"></line>
             <line x1="5" y1="12" x2="19" y2="12"></line>
           </svg>
@@ -80,9 +105,9 @@
       </div>
     </aside>
 
-    <!-- Main Content Area: Editor & Tabs -->
+    <!-- Área de contenido principal: Editor y Pestañas -->
     <main class="content-panel" id="cms-content-editor">
-      <!-- Tabs Navigation Bar -->
+      <!-- Barra de navegación de pestañas -->
       <nav class="tabs-navigation-bar" aria-label="Secciones del CMS">
         <ul class="tabs-list">
           <li>
@@ -97,21 +122,21 @@
         </ul>
       </nav>
 
-      <!-- Breadcrumbs Area -->
+      <!-- Área de migas de pan (Breadcrumbs) -->
       <div class="breadcrumbs-bar" id="editor-breadcrumbs">
-        <!-- Rendered dynamically by JS -->
+        <!-- Renderizado dinámicamente por JS -->
       </div>
 
-      <!-- Form Content Panel -->
+      <!-- Panel de contenido del editor -->
       <section class="editor-content-card" id="editor-fields-area">
-        <!-- Rendered dynamically by JS based on selection -->
+        <!-- Renderizado dinámicamente por JS basado en la selección -->
       </section>
     </main>
   </div>
 
-  <!-- Dialog Modals -->
+  <!-- Modales de diálogo -->
 
-  <!-- 1. Create Category Modal -->
+  <!-- 1. Modal para crear categoría -->
   <dialog class="custom-modal" id="create-category-modal">
     <div class="modal-header">
       <h3 class="modal-title">Crear nueva Categoría</h3>
@@ -125,7 +150,8 @@
       <div class="form-field">
         <label class="form-label" for="new-cat-msg">Mensaje inicial</label>
         <div class="form-label-desc">Mensaje de bienvenida que el bot enviará al seleccionar esta categoría</div>
-        <textarea id="new-cat-msg" class="form-textarea" placeholder="Ej: ¡Hola! Soy WienerBot. ¿En qué puedo ayudarte hoy?"></textarea>
+        <textarea id="new-cat-msg" class="form-textarea"
+          placeholder="Ej: ¡Hola! Soy WienerBot. ¿En qué puedo ayudarte hoy?"></textarea>
       </div>
     </div>
     <div class="modal-footer">
@@ -137,29 +163,38 @@
   <!-- 2. Create Subcategory Modal -->
   <dialog class="custom-modal" id="create-subcategory-modal">
     <div class="modal-header">
-      <h3 class="modal-title">Crear nueva Subcategoría</h3>
+      <h3 class="modal-title">Nueva subcategoría</h3>
       <button type="button" class="btn-modal-close btn-modal-cancel" aria-label="Cerrar modal">&times;</button>
     </div>
     <div class="modal-body">
       <div class="form-field">
-        <label class="form-label" for="new-sub-name">Nombre de la subcategoría <span class="required-star">*</span></label>
-        <input type="text" id="new-sub-name" class="form-input" placeholder="Ej: Accesos">
+        <label class="form-label" for="new-sub-name">Nombre</label>
+        <input type="text" id="new-sub-name" class="form-input" placeholder="Ej: 🔐 Accesos">
       </div>
       <div class="form-field">
-        <label class="form-label" for="new-sub-type">Tipo de subcategoría</label>
-        <select id="new-sub-type" class="form-select">
-          <option value="FAQ">FAQ (Contiene preguntas frecuentes)</option>
-          <option value="DIRECTO">DIRECTO (Respuesta directa)</option>
-        </select>
+        <label class="form-label">Tipo de contenido</label>
+        <input type="hidden" id="new-sub-type" value="FAQ">
+        <div class="modal-type-cards">
+          <div class="modal-type-card active" data-type="FAQ">
+            <span class="modal-card-badge badge-faq">FAQ</span>
+            <div class="modal-card-title">Con preguntas (FAQ)</div>
+            <div class="modal-card-desc">Contendrá preguntas con sus respuestas individuales</div>
+          </div>
+          <div class="modal-type-card" data-type="DIRECTO">
+            <span class="modal-card-badge badge-directo">DIRECTO</span>
+            <div class="modal-card-title">Respuesta directa</div>
+            <div class="modal-card-desc">Muestra un bloque de texto sin preguntas</div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn-modal-cancel btn-outline-cancel">Cancelar</button>
-      <button type="button" class="btn-modal-save" id="create-sub-save">Crear subcategoría</button>
+      <button type="button" class="btn-modal-save" id="create-sub-save">Crear</button>
     </div>
   </dialog>
 
-  <!-- 3. Create Question Modal -->
+  <!-- 3. Modal para crear pregunta -->
   <dialog class="custom-modal" id="create-question-modal">
     <div class="modal-header">
       <h3 class="modal-title">Crear nueva Pregunta</h3>
@@ -172,7 +207,8 @@
       </div>
       <div class="form-field">
         <label class="form-label" for="new-q-answer">Respuesta sugerida</label>
-        <textarea id="new-q-answer" class="form-textarea" placeholder="Ej: Para recuperar tus credenciales, ingresa a..."></textarea>
+        <textarea id="new-q-answer" class="form-textarea"
+          placeholder="Ej: Para recuperar tus credenciales, ingresa a..."></textarea>
       </div>
     </div>
     <div class="modal-footer">
@@ -181,7 +217,7 @@
     </div>
   </dialog>
 
-  <!-- 4. Delete Confirmation Modal -->
+  <!-- 4. Modal de confirmación para eliminar -->
   <dialog class="custom-modal delete-confirm-modal" id="delete-modal">
     <div class="modal-body delete-modal-body">
       <div class="delete-warning-header">
@@ -198,11 +234,11 @@
         </div>
       </div>
 
-      <!-- Cascade details container -->
+      <!-- Contenedor de detalles en cascada -->
       <div class="delete-cascade-box">
         <div class="delete-cascade-title">Esta acción eliminará en cascada:</div>
         <div class="delete-cascade-list" id="delete-cascade-list">
-          <!-- Populated by JS -->
+          <!-- Generado por JS -->
         </div>
         <div class="delete-cascade-divider"></div>
         <div class="delete-cascade-total">
@@ -212,14 +248,16 @@
     </div>
     <div class="modal-footer delete-modal-footer">
       <button type="button" class="btn-modal-cancel btn-outline-cancel" id="delete-cancel-btn">
-        <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"
+          stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
         Cancelar
       </button>
       <button type="button" class="btn-modal-delete-confirm" id="delete-confirm-btn">
-        <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"
+          stroke-linecap="round" stroke-linejoin="round">
           <polyline points="3 6 5 6 21 6"></polyline>
           <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
         </svg>
@@ -228,7 +266,105 @@
     </div>
   </dialog>
 
-  <!-- Load JavaScript Code -->
+  <!-- 5. Modal para confirmar cambio a DIRECTO -->
+  <dialog class="custom-modal confirm-switch-modal" id="confirm-switch-to-direct-modal">
+    <div class="modal-body delete-modal-body">
+      <div class="delete-warning-header">
+        <div class="warning-icon-circle warning-theme-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 32 32" fill="none">
+            <path
+              d="M4.56728 27.3333C4.34128 27.3333 4.13828 27.2781 3.95828 27.1677C3.77828 27.0572 3.63839 26.9115 3.53861 26.7307C3.43461 26.5511 3.37739 26.3567 3.36695 26.1473C3.3565 25.938 3.41295 25.7307 3.53628 25.5253L14.9506 5.80799C15.0742 5.60266 15.2286 5.45088 15.4139 5.35266C15.5995 5.25443 15.7948 5.20532 15.9999 5.20532C16.2051 5.20532 16.4004 5.25443 16.5859 5.35266C16.7713 5.45088 16.9257 5.60266 17.0493 5.80799L28.4636 25.5253C28.5869 25.7307 28.6431 25.9371 28.6319 26.1447C28.6208 26.3524 28.5639 26.5478 28.4613 26.7307C28.3588 26.9135 28.2183 27.0598 28.0396 27.1693C27.8609 27.2787 27.6586 27.3333 27.4326 27.3333H4.56728ZM5.93328 25.3333H26.0666L15.9999 7.99999L5.93328 25.3333ZM16.7639 23.4307C16.9726 23.2222 17.0769 22.9675 17.0769 22.6667C17.0769 22.3658 16.9726 22.1111 16.7639 21.9027C16.5555 21.694 16.3008 21.5897 15.9999 21.5897C15.6991 21.5897 15.4444 21.694 15.2359 21.9027C15.0273 22.1111 14.9229 22.3658 14.9229 22.6667C14.9229 22.9675 15.0273 23.2222 15.2359 23.4307C15.4444 23.6393 15.6991 23.7437 15.9999 23.7437C16.3008 23.7437 16.5555 23.6393 16.7639 23.4307ZM16.7126 19.969C16.9042 19.7772 16.9999 19.5397 16.9999 19.2563V14.5897C16.9999 14.3063 16.9041 14.0689 16.7123 13.8773C16.5205 13.6855 16.2829 13.5897 15.9996 13.5897C15.7161 13.5897 15.4786 13.6855 15.2873 13.8773C15.0957 14.0689 14.9999 14.3063 14.9999 14.5897V19.2563C14.9999 19.5397 15.0958 19.7772 15.2876 19.969C15.4794 20.1605 15.7169 20.2563 16.0003 20.2563C16.2838 20.2563 16.5213 20.1605 16.7126 19.969Z"
+              fill="#D77208" />
+          </svg>
+        </div>
+        <div class="delete-titles">
+          <h3 class="delete-modal-title">¿Cambiar a Respuesta Directa?</h3>
+          <p class="delete-modal-subtitle">Esta acción modificará la estructura de esta subcategoría.</p>
+        </div>
+      </div>
+
+      <div class="warning-cascade-box">
+        <div class="warning-cascade-title">Esta acción eliminará en cascada:</div>
+        <div class="delete-cascade-list">
+          <div class="delete-cascade-row">
+            <span>Preguntas existentes</span>
+            <span class="delete-count-val" id="switch-direct-questions-count">0</span>
+          </div>
+          <div class="delete-cascade-row">
+            <span>Respuestas asociadas</span>
+            <span class="delete-count-val" id="switch-direct-answers-count">0</span>
+          </div>
+        </div>
+        <div class="delete-cascade-divider warning-divider"></div>
+        <div class="delete-cascade-total warning-total-text">
+          <span>Total: <strong id="switch-direct-total-value">0</strong> registros serán eliminados. Primero elimina el
+            contenido hijo para cambiar el tipo.</span>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer delete-modal-footer">
+      <button type="button" class="btn-modal-cancel btn-outline-cancel" id="switch-direct-cancel-btn">
+        <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"
+          stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+        Cancelar
+      </button>
+      <button type="button" class="btn-modal-save" id="switch-direct-confirm-btn" style="background-color: #F97316;">
+        Confirmar cambio
+      </button>
+    </div>
+  </dialog>
+
+  <!-- 6. Modal para confirmar cambio a FAQ -->
+  <dialog class="custom-modal confirm-switch-modal" id="confirm-switch-to-faq-modal">
+    <div class="modal-body delete-modal-body">
+      <div class="delete-warning-header">
+        <div class="warning-icon-circle warning-theme-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 32 32" fill="none">
+            <path
+              d="M4.56728 27.3333C4.34128 27.3333 4.13828 27.2781 3.95828 27.1677C3.77828 27.0572 3.63839 26.9115 3.53861 26.7307C3.43461 26.5511 3.37739 26.3567 3.36695 26.1473C3.3565 25.938 3.41295 25.7307 3.53628 25.5253L14.9506 5.80799C15.0742 5.60266 15.2286 5.45088 15.4139 5.35266C15.5995 5.25443 15.7948 5.20532 15.9999 5.20532C16.2051 5.20532 16.4004 5.25443 16.5859 5.35266C16.7713 5.45088 16.9257 5.60266 17.0493 5.80799L28.4636 25.5253C28.5869 25.7307 28.6431 25.9371 28.6319 26.1447C28.6208 26.3524 28.5639 26.5478 28.4613 26.7307C28.3588 26.9135 28.2183 27.0598 28.0396 27.1693C27.8609 27.2787 27.6586 27.3333 27.4326 27.3333H4.56728ZM5.93328 25.3333H26.0666L15.9999 7.99999L5.93328 25.3333ZM16.7639 23.4307C16.9726 23.2222 17.0769 22.9675 17.0769 22.6667C17.0769 22.3658 16.9726 22.1111 16.7639 21.9027C16.5555 21.694 16.3008 21.5897 15.9999 21.5897C15.6991 21.5897 15.4444 21.694 15.2359 21.9027C15.0273 22.1111 14.9229 22.3658 14.9229 22.6667C14.9229 22.9675 15.0273 23.2222 15.2359 23.4307C15.4444 23.6393 15.6991 23.7437 15.9999 23.7437C16.3008 23.7437 16.5555 23.6393 16.7639 23.4307ZM16.7126 19.969C16.9042 19.7772 16.9999 19.5397 16.9999 19.2563V14.5897C16.9999 14.3063 16.9041 14.0689 16.7123 13.8773C16.5205 13.6855 16.2829 13.5897 15.9996 13.5897C15.7161 13.5897 15.4786 13.6855 15.2873 13.8773C15.0957 14.0689 14.9999 14.3063 14.9999 14.5897V19.2563C14.9999 19.5397 15.0958 19.7772 15.2876 19.969C15.4794 20.1605 15.7169 20.2563 16.0003 20.2563C16.2838 20.2563 16.5213 20.1605 16.7126 19.969Z"
+              fill="#D77208" />
+          </svg>
+        </div>
+        <div class="delete-titles">
+          <h3 class="delete-modal-title">¿Cambiar a tipo FAQ?</h3>
+          <p class="delete-modal-subtitle">Esta acción modificará el tipo de contenido.</p>
+        </div>
+      </div>
+
+      <div class="warning-cascade-box">
+        <div class="warning-cascade-title">Esta acción eliminará:</div>
+        <div class="delete-cascade-list">
+          <div class="delete-cascade-row">
+            <span>Respuesta directa existente</span>
+            <span class="delete-count-val">1</span>
+          </div>
+        </div>
+        <div class="delete-cascade-divider warning-divider"></div>
+        <div class="delete-cascade-total warning-total-text">
+          <span>Total: <strong>1</strong> respuesta será eliminada. Primero elimina el contenido hijo para cambiar el
+            tipo.</span>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer delete-modal-footer">
+      <button type="button" class="btn-modal-cancel btn-outline-cancel" id="switch-faq-cancel-btn">
+        <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"
+          stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+        Cancelar
+      </button>
+      <button type="button" class="btn-modal-save" id="switch-faq-confirm-btn" style="background-color: #278B52;">
+        Confirmar cambio
+      </button>
+    </div>
+  </dialog>
+
+  <!-- Cargar código de JavaScript -->
   <script src="app.js"></script>
 </body>
 
