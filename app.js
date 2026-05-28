@@ -1,6 +1,6 @@
 // WienerBot CMS - Lógica de la Aplicación
 
-// 1. Semilla de Datos Iniciales
+// 1. Datos de prueba (semilla) para inicializar el flujo
 const DEFAULT_DATA = {
   categories: ["cat-1", "cat-2", "cat-3"],
   nodes: {
@@ -216,7 +216,7 @@ let state = {
   history: []
 };
 
-// Cargar el estado desde localStorage o inicializar con los datos semilla
+// Cargar el estado desde localStorage o inicializar con los datos de prueba
 function loadState() {
   const localData = localStorage.getItem("wienerbot_cms_data");
   const localHistory = localStorage.getItem("wienerbot_cms_history");

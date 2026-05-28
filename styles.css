@@ -1,4 +1,4 @@
-/* Restablecimiento universal y valores por defecto */
+/* Reset */
 * {
   margin: 0;
   padding: 0;
@@ -781,6 +781,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  margin-bottom: 1rem;
 }
 
 .other-question-li {
@@ -1039,7 +1040,7 @@ dialog[open],
 }
 
 .delete-cascade-box {
-  background-color: #FFEBEE;
+  background-color: rgba(212, 24, 61, 0.05);
   border: 1px solid #FFCDD2;
   border-radius: 8px;
   padding: 16px;
