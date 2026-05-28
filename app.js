@@ -1493,12 +1493,13 @@ function renderChatMessages() {
       <div class="chat-message-row ${isBot ? "chat-row-bot" : "chat-row-user"}">
         ${isBot ? `
           <div class="chat-avatar">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="11" width="18" height="10" rx="2"></rect>
-              <circle cx="12" cy="5" r="2"></circle>
-              <path d="M12 7v4"></path>
-              <line x1="8" y1="16" x2="8" y2="16"></line>
-              <line x1="16" y1="16" x2="16" y2="16"></line>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" viewBox="0 0 20 16" fill="none">
+              <path d="M9.63838 4.30005V0.800049H6.10303" stroke="#0F848F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M14.9414 4.30005H4.33535C3.35941 4.30005 2.56767 5.08387 2.56767 6.05005V13.05C2.56767 14.0162 3.35941 14.8001 4.33535 14.8001H14.9414C15.9173 14.8001 16.7091 14.0162 16.7091 13.05V6.05005C16.7091 5.08387 15.9173 4.30005 14.9414 4.30005Z" stroke="#0F848F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M0.800003 9.55005H2.56768" stroke="#0F848F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M16.7091 9.55005H18.4768" stroke="#0F848F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12.2899 8.67505V10.4251" stroke="#0F848F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M6.98688 8.67505V10.4251" stroke="#0F848F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
         ` : ""}
@@ -1567,12 +1568,13 @@ function loadPreviewTab() {
       <div class="chatbot-window-container">
         <div class="chatbot-header">
           <div class="chatbot-logo-circle">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="11" width="18" height="10" rx="2"></rect>
-              <circle cx="12" cy="5" r="2"></circle>
-              <path d="M12 7v4"></path>
-              <line x1="8" y1="16" x2="8" y2="16"></line>
-              <line x1="16" y1="16" x2="16" y2="16"></line>
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="18" viewBox="0 0 22 18" fill="none">
+              <path d="M11.001 4.8999V0.899902H6.9606" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M17.0616 4.8999H4.9404C3.82504 4.8999 2.9202 5.7957 2.9202 6.8999V14.8999C2.9202 16.0041 3.82504 16.8999 4.9404 16.8999H17.0616C18.177 16.8999 19.0818 16.0041 19.0818 14.8999V6.8999C19.0818 5.7957 18.177 4.8999 17.0616 4.8999Z" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M0.899994 10.8999H2.9202" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M19.0818 10.8999H21.102" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M14.0313 9.8999V11.8999" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M7.9707 9.8999V11.8999" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
           <div class="chatbot-header-text">
